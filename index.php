@@ -94,7 +94,7 @@ $user_email = $_POST["user_email"];
 echo "<p>Hello, ".$user_email."</p>";
 
 // Look for user in db, add if not found
-$sql_a = "SELECT id FROM users WHERE email = '";
+$sql_a = "SELECT * FROM users WHERE email = '";
 $sql_z = "'";
 $sql1 = "{$sql_a}{$user_email}{$sql_z}";
 
@@ -133,7 +133,7 @@ echo "<p>Click your character to play.</p>";
 echo "<table><tr><th>Living character</th></tr>";
 while($row = $result->fetch_assoc()){
 $character_id = $row["id"];
-echo "<tr><td><a href='#' onclick='startPlay();'>" . $row["name"] . "</a></td></tr>";
+echo "<tr><td>" . $row["name"] . "</td><td>" . "<button class='btn btn-default' onclick='startPlay();'>Play</button>" . "</td></tr>";
 };
 echo "</table>";
 } else {
@@ -148,7 +148,7 @@ $result = mysqli_query($connect, $sql);
 if($result->num_rows > 0){
 echo "<table><tr><th>Dead characters</th></tr>";
 while($row = $result->fetch_assoc()){
-echo "<tr><td>" . $row["name"] . "</td></tr>";
+echo "<tr><td>" . $row["name"] . "</td><td>" . "<button class='btn btn-default'>View</button>" . "</td></tr>";
 };
 echo "</table>";
 }
