@@ -34,9 +34,9 @@
 
     <div class="userDashboard">
       <h1>Houses and Holds</h1>
-      <img id="user_pic" />
-      <span id="user_email"></span>
-      <p><a href="#" onclick="signOut();">Sign out</a></p>
+      <img id="user_pic" class="img-circle" width="100" height="100" />
+      <p><span id="user_email"></span></p>
+      <button class="btn btn-danger" onclick="signOut();">Sign out</button>
 
       <?php
 
@@ -79,7 +79,7 @@
         };
 
         // Grab user characters
-        //$user_email = "madeup@email.com";
+        $user_email = "madeup@email.com";
         $sql_a = "SELECT characters.id, characters.name, users.email FROM characters INNER JOIN users ON characters.user_id = users.id WHERE users.email = '";
         $sql_z = "' AND characters.death_date IS NULL";
         $sql = "{$sql_a}{$user_email}{$sql_z}";
