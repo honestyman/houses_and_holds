@@ -6,10 +6,48 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <meta name="google-signin-client_id" content="433812581070-do8qp17vmag8vhurminr6kdbfloakhm9.apps.googleusercontent.com">
 <!--<meta http-equiv="Content=Security-Policy" content="script-src *.housesandholds.com">-->
-<script src="/src/onSignIn.js"></script>
-<script src="/src/signOut.js"></script>
-<script src="/src/startPlay.js"></script>
-<script src="/src/stopPlay.js"></script>
+<script>
+function onSignIn(googleUser){
+  var profile = googleUser.getBasicProfile();
+  $(".landingPage").css("display","none");
+  $(".userDashboard").css("display","block");
+  $(".activeGame").css("display","none");
+  $("#user_pic").attr('src',profile.getImageUrl());
+  $("#user_email").text(profile.getEmail());
+  var post = {};
+  post.user_email = profile.getEmail();
+  //post.user_email = "madeup@email.com";
+  $.ajax({
+    url: "index.php",
+    method: "post",
+    data: post,
+    success: function(res){ console.log(res); }
+  })
+}
+
+function signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
+  $(".landingPage").css("display","block");
+  $(".userDashboard").css("display","none");
+  $(".activeGame").css("display","none");
+  $("#pic").attr('src',"");
+}
+
+function startPlay() {
+  $(".landingPage").css("display","none");
+  $(".userDashboard").css("display","none");
+  $(".activeGame").css("display","block");
+}
+
+function stopPlay() {
+  $(".landingPage").css("display","none");
+  $(".userDashboard").css("display","block");
+  $(".activeGame").css("display","none");
+}
+</script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
@@ -40,8 +78,43 @@ display: none;
 <button class="btn btn-danger" onclick="signOut();">Sign out</button>
 
 <?php
-require_once 'src/dbConnect.php';
-require_once 'src/findUserByEmail.php';
+function dbConnect(){
+  $host_name = 'db5000166612.hosting-data.io';
+  $database = 'dbs161672';
+  $user_name = 'dbu219044';
+  $password = 'Tig3rducky*';
+  $connect = mysqli_connect($host_name, $user_name, $password, $database);
+
+  return $connect;
+}
+
+function findUserByEmail($user_email){
+$sql_a = "SELECT id FROM users WHERE email = '";
+$sql_z = "'";
+$sql1 = "{$sql_a}{$user_email}{$sql_z}";
+
+$result = mysqli_query($connect, $sql1);
+if($result->num_rows > 0) {
+while($row = $result->fetch_assoc()){
+$user_id = $row["id"];
+};
+} else {
+$sql_a = "INSERT INTO users(email) VALUES ('";
+$sql_z = "')";
+$sql2 = "{$sql_a}{$user_email}{$sql_z}";
+mysqli_query($connect, $sql2);
+
+$result = mysqli_query($connect, $sql);
+if($result->num_rows > 0){
+  while($row = $result->fetch_assoc()){
+    $user_id = $row["id"];
+  };
+} else {
+  echo "<p>Failed to add user to database.</p>";
+}
+};
+return $user_id;
+}
 
 // Connect to db
 $connect = dbConnect();
