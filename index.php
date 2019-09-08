@@ -78,17 +78,22 @@ display: none;
 <button class="btn btn-danger" onclick="signOut();">Sign out</button>
 
 <?php
-function dbConnect(){
-  $host_name = 'db5000166612.hosting-data.io';
-  $database = 'dbs161672';
-  $user_name = 'dbu219044';
-  $password = 'Tig3rducky*';
-  $connect = mysqli_connect($host_name, $user_name, $password, $database);
 
-  return $connect;
-}
+// Connect to db
+$host_name = 'db5000166612.hosting-data.io';
+$database = 'dbs161672';
+$user_name = 'dbu219044';
+$password = 'Tig3rducky*';
+$connect = mysqli_connect($host_name, $user_name, $password, $database);
 
-function findUserByEmail($user_email){
+if (mysqli_errno()) {
+die('<p>Failed to connect to MySQL: '.mysql_error().'</p>');
+} else {
+
+$user_email = $_POST["user_email"];
+echo "<p>Hello, ".$user_email."</p>";
+
+// Look for user in db, add if not found
 $sql_a = "SELECT id FROM users WHERE email = '";
 $sql_z = "'";
 $sql1 = "{$sql_a}{$user_email}{$sql_z}";
@@ -113,24 +118,11 @@ if($result->num_rows > 0){
   echo "<p>Failed to add user to database.</p>";
 }
 };
-return $user_id;
-}
 
-// Connect to db
-$connect = dbConnect();
-
-if (mysqli_errno()) {
-die('<p>Failed to connect to MySQL: '.mysql_error().'</p>');
-} else {
-
-$user_email = $_POST["user_email"];
-echo "<p>Hello, ".$user_email."</p>";
-
-// Look for user in db, add if not found
-$user_id = findUserByEmail($user_email);
+// Replace user email with dummy account for testing
+$user_email = "madeup@email.com";
 
 // Grab user characters
-$user_email = "madeup@email.com";
 $sql_a = "SELECT characters.id, characters.name, users.email FROM characters INNER JOIN users ON characters.user_id = users.id WHERE users.email = '";
 $sql_z = "' AND characters.death_date IS NULL";
 $sql = "{$sql_a}{$user_email}{$sql_z}";
