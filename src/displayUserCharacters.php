@@ -20,6 +20,7 @@ function displayUserCharacters($connect, $user_id){
   $sql_z = "' AND characters.death_date IS NOT NULL";
   $sql = "{$sql_a}{$user_id}{$sql_z}";
 
+
   $result = mysqli_query($connect, $sql);
   if($result->num_rows > 0){
     echo "<table><tr><th>Dead characters</th></tr>";
