@@ -13,8 +13,9 @@
 <h1>Houses and Holds</h1>
 
 <form action="index.php" method="post">
- <input type="text" name="username" placeholder="User name (email)" />
- <input type="text" name="password" placeholder="Password" />
+ <input type="text" name="username" placeholder="User name (email)" /><br />
+ <input type="text" name="password" placeholder="Password" /><br />
+ <input type="text" name="password2" placeholder="Re-type password to join (new user)" /><br />
  <input type="submit" name="submit" />
 </form>
 
@@ -36,11 +37,12 @@ die('<p>Failed to connect to MySQL: '.mysql_error().'</p>');
   if ( isset( $_POST['submit'] ) ) { // retrieve the form data by using the element's name attributes value as key
     $user_email = $_POST['username'];
     $pw = $_POST['password']; // display the results
+    $pw2 = $_POST['password2'];
     //echo '<h3>Form POST Method</h3>';
     //echo 'Your email is ' . $user_email . ' and your password is ' . $pw ;
 
     // Look for user in db, add if not found
-    $user_id = findUserByEmail($connect, $user_email, $pw);
+    $user_id = findUserByEmail($connect, $user_email, $pw, $pw2);
     //echo $user_id;
 
     // Grab user characters

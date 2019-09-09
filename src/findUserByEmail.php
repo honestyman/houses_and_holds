@@ -1,5 +1,5 @@
 <?php
-function findUserByEmail($connect, $user_email, $pw){
+function findUserByEmail($connect, $user_email, $pw, $pw2){
 $sql_a = "SELECT id FROM users WHERE email = '";
 $sql_z = "'";
 $sql1 = "{$sql_a}{$user_email}{$sql_z}";
