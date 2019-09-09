@@ -6,11 +6,10 @@ function displayUserCharacters($connect, $user_id){
 
   $result = mysqli_query($connect, $sql);
   if($result->num_rows > 0){
-    echo "<p>Click your character to play.</p>";
     echo "<table><tr><th>Living character</th></tr>";
     while($row = $result->fetch_assoc()){
       $character_id = $row["id"];
-        echo "<tr><td><a href='#' onclick='startPlay();'>" . $row["name"] . "</a></td></tr>";
+        echo "<tr><td>" . $row["name"] . "</td><td><button class='btn btn-default'>Play</button></td></tr>";
       };
     echo "</table>";
   } else {
@@ -25,7 +24,7 @@ function displayUserCharacters($connect, $user_id){
   if($result->num_rows > 0){
     echo "<table><tr><th>Dead characters</th></tr>";
     while($row = $result->fetch_assoc()){
-      echo "<tr><td>" . $row["name"] . "</td></tr>";
+      echo "<tr><td>" . $row["name"] . "</td><td><button class='btn btn-default'>View</button></td></tr>";
       };
     echo "</table>";
   }

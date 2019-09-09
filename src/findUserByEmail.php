@@ -20,14 +20,15 @@ if($result->num_rows > 0) {
       $sql_a = "INSERT INTO users(email, pw) VALUES ('";
       $sql_m = "','";
       $sql_z = "')";
-      $sql2 = "{$sql_a}{$user_email}{$sql_m}{$user_pw}{$sql_z}";
+      $sql2 = "{$sql_a}{$user_email}{$sql_m}{$pw}{$sql_z}";
       mysqli_query($connect, $sql2);
 
-      $result = mysqli_query($connect, $sql);
+      $result = mysqli_query($connect, $sql1);
       if($result->num_rows > 0){
         while($row = $result->fetch_assoc()){
           $user_id = $row["id"];
         };
+        echo "<p>User added successfully!</p>";
         return $user_id;
       } else {
         echo "<p>Failed to add user to database.</p>";

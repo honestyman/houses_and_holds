@@ -13,10 +13,10 @@
 <h1>Houses and Holds</h1>
 
 <form action="index.php" method="post">
- <input type="text" name="username" placeholder="User name (email)" /><br />
- <input type="text" name="password" placeholder="Password" /><br />
- <input type="text" name="password2" placeholder="Re-type password to join (new user)" /><br />
- <input type="submit" name="submit" />
+ <p><input type="text" name="username" placeholder="User name (email)" size="40" /></p>
+ <p><input type="text" name="password" placeholder="Password" size="40" /></p>
+ <p><input type="text" name="password2" placeholder="Re-type password to join (new user)" size="40" /></p>
+ <p><input type="submit" name="submit" /></p>
 </form>
 
 <?php
