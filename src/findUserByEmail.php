@@ -14,12 +14,24 @@ if($result->num_rows > 0) {
     return $user_id;
   } else {
     echo "<p>Password doesn't match.</p>";
+    // Logoutfail form
+    echo "<form action='index.php' method='post'>";
+    echo "<input type='submit' name='logoutfail' value='Back to Login' />";
+    echo "</form></p>";
   }
   } else {
     if($user_email=="") {
       echo "<p>User name (email) cannot be blank.</p>";
+      // Logoutfail form
+      echo "<form action='index.php' method='post'>";
+      echo "<input type='submit' name='logoutfail' value='Back to Login' />";
+      echo "</form></p>";
     } else if($pw=="") {
       echo "<p>Password cannot be blank.</p>";
+      // Logoutfail form
+      echo "<form action='index.php' method='post'>";
+      echo "<input type='submit' name='logoutfail' value='Back to Login' />";
+      echo "</form></p>";
     } else if($pw==$pw2){
       $sql_a = "INSERT INTO users(email, pw) VALUES ('";
       $sql_m = "','";
@@ -36,9 +48,17 @@ if($result->num_rows > 0) {
         return $user_id;
       } else {
         echo "<p>Failed to add user to database.</p>";
+        // Logoutfail form
+        echo "<form action='index.php' method='post'>";
+        echo "<input type='submit' name='logoutfail' value='Back to Login' />";
+        echo "</form></p>";
       }
     } else {
       echo "<p>Re-typed password doesn't match.</p>";
+      // Logoutfail form
+      echo "<form action='index.php' method='post'>";
+      echo "<input type='submit' name='logoutfail' value='Back to Login' />";
+      echo "</form></p>";
     }
   };
 }

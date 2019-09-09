@@ -15,7 +15,7 @@ require_once "src/charMakeOffline.php";
 
 // Login/signup form
 echo "<form action='dashboard.php' method='post'>";
-echo "<p><input type='text' name='username' placeholder='User name (email)' size='40' /></p>";
+echo "<p><input type='email' name='username' placeholder='User name (email)' size='40' /></p>";
 echo "<p><input type='password' name='password' placeholder='Password' size='40' /></p>";
 echo "<p><input type='password' name='password2' placeholder='Re-type password to join (new user)' size='40' /></p>";
 echo "<p><input type='submit' name='login' value='Log in / Sign up' /></p>";
@@ -39,6 +39,14 @@ if(isset($_POST['quitlogout'])){
   $pw = "";
   $pw2 = "";
   echo "<p>You are logged out</p>";
+  exit;
+}
+
+// Check if the logoutfail form is submitted
+if ( isset( $_POST['logoutfail'] ) ) {
+  $user_email = "";
+  $pw = "";
+  $pw2 = "";
   exit;
 }
 
