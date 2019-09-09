@@ -9,7 +9,7 @@ function displayUserCharacters($connect, $user_id){
     echo "<table><tr><th>Living character</th></tr>";
     while($row = $result->fetch_assoc()){
       $character_id = $row["id"];
-        echo "<tr><td>" . $row["name"] . "</td><td><button class='btn btn-default'>Play</button></td></tr>";
+        echo "<tr><td>" . $row["name"] . "</td><td><form action='game.php' method='post'><input type='hidden' name='char_id' value='" . $row["id"] . "' /><input type='submit' name='submit' value='Play' /></form></td></tr>";
       };
     echo "</table>";
   } else {
