@@ -16,7 +16,11 @@ if($result->num_rows > 0) {
     echo "<p>Password doesn't match.</p>";
   }
   } else {
-    if($pw==$pw2){
+    if($user_email=="") {
+      echo "<p>User name (email) cannot be blank.</p>";
+    } else if($pw=="") {
+      echo "<p>Password cannot be blank.</p>";
+    } else if($pw==$pw2){
       $sql_a = "INSERT INTO users(email, pw) VALUES ('";
       $sql_m = "','";
       $sql_z = "')";
