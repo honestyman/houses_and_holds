@@ -5,6 +5,18 @@
 <title>Houses and Holds</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+#chatbox {
+    text-align:left;
+    margin-bottom:10px;
+    margin-top:10px;
+    padding:10px;
+    background:#fff;
+    height:270px;
+    width:450px;
+    border:1px solid #000;
+    overflow:auto; }
+</style>
 </head>
 <body>
 <div>
@@ -43,11 +55,24 @@ die('<p>Failed to connect to MySQL: '.mysql_error().'</p>');
     echo "<input type='submit' name='quitlogout' value='Quit and Logout' />";
     echo "</form>";
 
+    echo "<div id='chatbox'></div>";
+
+    echo "<form name='message' action=''>";
+    echo "<input type='text' id='usermsg' name='usermsg' size='63' />";
+    echo "<input type='submit' id='submitmsg' name='submitmsg' value='Send' />";
+    echo "</form>";
+
     exit;
   }
 }
 
 ?>
 </div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+});
+</script>
 </body>
 </html>
