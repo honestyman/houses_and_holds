@@ -10,7 +10,9 @@ if($result->num_rows > 0) {
     $user_id = $row["id"];
     $user_pw = $row["pw"];
   };
-  if($pw==$user_pw){
+  if(password_verify($pw,$user_pw)){
+    //$_SESSION["user_id"] = $user_id;
+    //header("location:dashboard.php");
     return $user_id;
   } else {
     echo "<p>Password doesn't match.</p>";
@@ -33,10 +35,11 @@ if($result->num_rows > 0) {
       echo "<input type='submit' name='logoutfail' value='Back to Login' />";
       echo "</form></p>";
     } else if($pw==$pw2){
+      $hash = password_hash($pw, PASSWORD_DEFAULT);
       $sql_a = "INSERT INTO users(email, pw) VALUES ('";
       $sql_m = "','";
       $sql_z = "')";
-      $sql2 = "{$sql_a}{$user_email}{$sql_m}{$pw}{$sql_z}";
+      $sql2 = "{$sql_a}{$user_email}{$sql_m}{$hash}{$sql_z}";
       mysqli_query($connect, $sql2);
 
       $result = mysqli_query($connect, $sql1);

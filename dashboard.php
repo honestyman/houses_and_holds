@@ -26,9 +26,9 @@ die('<p>Failed to connect to MySQL: '.mysql_error().'</p>');
 
   // Check if the login form is submitted
   if ( isset( $_POST['login'] ) ) {
-    $user_email = mysqli_real_escape_string($connect, $_POST['username']);
-    $pw = mysqli_real_escape_string($connect, $_POST['password']);
-    $pw2 = mysqli_real_escape_string($connect, $_POST['password2']);
+    $user_email = $_POST['username'];
+    $pw = $_POST['password'];
+    $pw2 = $_POST['password2'];
 
     // Look for user in db, add if not found
     $user_id = findUserByEmail($connect, $user_email, $pw, $pw2);
