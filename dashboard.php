@@ -16,12 +16,21 @@ require_once "src/findUserByEmail.php";
 require_once "src/displayUserCharacters.php";
 require_once "src/charMakeOffline.php";
 
+session_start();
+
 // Connect to db
 $connect = dbConnect();
 
 if (mysqli_errno()) {
 die('<p>Failed to connect to MySQL: '.mysql_error().'</p>');
 } else {
+
+  if(!isset($_SESSION['user_email'])){
+    // Redirect to index for login
+    echo "<p>fail</p>";
+  } else {
+    echo $_SESSION['user_email'];
+  }
 
 
   // Check if the login form is submitted

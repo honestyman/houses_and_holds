@@ -24,8 +24,14 @@
 <?php
 
 require_once "src/charMakeOffline.php";
+require_once "src/dbConnect.php";
+require_once "src/displayUserCharacters.php";
 
 session_start();
+
+$connect = dbConnect();
+
+
 
 // Login/signup form
 function loginForm(){
@@ -52,11 +58,20 @@ if(isset($_POST['login'])){
 if(!isset($_SESSION['user_email'])){
   loginForm();
 } else {
+  $user_email = $_SESSION['user_email'];
   echo "<p>Logged in as " . $_SESSION['user_email'];
   echo "<form action='index.php' method='post'>";
-  echo "<input type='hidden' name='exit_email' value='" . $_SESSION['user_email'] . "' />";
+  echo "<input type='hidden' name='exit_email' value='" . $user_email . "' />";
   echo "<input type='submit' name='logout' value='Logout' />";
   echo "</form></p>";
+
+  // Link to dashboard
+  if (mysqli_errno()) {
+  die('<p>Failed to connect to MySQL: '.mysql_error().'</p>');
+} else {
+  displayUserCharacters($connect, $_SESSION['user_email']);
+}
+  //echo "<p><a href='dashboard.php?" . htmlspecialchars(session_id($_SESSION['user_email'])) . "'>Dashboard</a></p>";
 
   echo "<div id='chatbox'>";
   if(file_exists("log.html") && filesize("log.html") > 0){
