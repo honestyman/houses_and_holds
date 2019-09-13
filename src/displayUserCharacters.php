@@ -1,7 +1,7 @@
 <?php
 function displayUserCharacters($connect, $user_id)
 {
-    $sql_a = "SELECT * FROM characters WHERE user_id = '";
+    $sql_a = "SELECT name, id FROM characters WHERE user_id = '";
     $sql_z = "' AND characters.death_date IS NULL";
     $sql = "{$sql_a}{$user_id}{$sql_z}";
 
@@ -11,8 +11,14 @@ function displayUserCharacters($connect, $user_id)
       echo "<table><tr><th>Living character</th></tr>";
       while($row = $result->fetch_assoc())
       {
-        $character_id = $row["id"];
-        echo "<tr><td>" . $row["name"] . "</td><td><form action='game.php' method='post'><input type='hidden' name='char_id' value='" . $row["id"] . "' /><input type='hidden' name='user_id' value='" . $user_id . "' /><input type='submit' name='play' value='Play' /></form></td></tr>";
+        echo "<tr><td>";
+        echo $row["name"];
+        echo "</td><td>";
+        echo "<form action='index.php' method='post'>";
+        echo "<input type='hidden' name='char_id' value='" . $row["id"] . "' />";
+        echo "<input type='submit' name='play' value='Play' />";
+        echo "</form>";
+        echo "</td></tr>";
       };
       echo "</table>";
     }
@@ -21,7 +27,7 @@ function displayUserCharacters($connect, $user_id)
       echo "<p>You have no living character. Create one!</p>";
     };
 
-    $sql_a = "SELECT * FROM characters WHERE user_id = '";
+    $sql_a = "SELECT name, id FROM characters WHERE user_id = '";
     $sql_z = "' AND characters.death_date IS NOT NULL";
     $sql = "{$sql_a}{$user_id}{$sql_z}";
 
@@ -30,7 +36,13 @@ function displayUserCharacters($connect, $user_id)
     {
       echo "<table><tr><th>Dead characters</th></tr>";
       while($row = $result->fetch_assoc()){
-        echo "<tr><td>" . $row["name"] . "</td><td><button class='btn btn-default'>View</button></td></tr>";
+        echo "<tr><td>";
+        echo $row["name"];
+        echo "</td><td>";
+        echo "<form action='index.php' method='post'>";
+        echo "<input type='hidden' name='char_id' value='" . $row["id"] . "' />";
+        echo "<input type='submit' name='view' value='View' />";
+        echo "</td></tr>";
         };
       echo "</table>";
     }
