@@ -1,5 +1,5 @@
 <?php
-function displayUserCharacters($connect, $user_id)
+function displayUserCharacters($connect, $user_id, $user_email)
 {
     $sql_a = "SELECT name, id FROM characters WHERE user_id = '";
     $sql_z = "' AND characters.death_date IS NULL";
@@ -16,6 +16,8 @@ function displayUserCharacters($connect, $user_id)
         echo "</td><td>";
         echo "<form action='index.php' method='post'>";
         echo "<input type='hidden' name='char_id' value='" . $row["id"] . "' />";
+        echo "<input type='hidden' name='user_id' value='" . $user_id . "' />";
+        echo "<input type='hidden' name='user_email' value='" . $user_email . "' />";
         echo "<input type='submit' name='play' value='Play' />";
         echo "</form>";
         echo "</td></tr>";

@@ -20,9 +20,9 @@ function findUserByEmail($connect, $user_email, $pw, $pw2)
     } else {
       echo "<p>Password doesn't match.</p>";
       // Logoutfail form
-      echo "<form action='index.php' method='post'>";
-      echo "<input type='submit' name='logoutfail' value='Back to Login' />";
-      echo "</form></p>";
+      //echo "<form action='index.php' method='post'>";
+      //echo "<input type='submit' name='logoutfail' value='Back to Login' />";
+      //echo "</form></p>";
     }
   }
   else
@@ -30,15 +30,15 @@ function findUserByEmail($connect, $user_email, $pw, $pw2)
       if($user_email=="") {
         echo "<p>User name (email) cannot be blank.</p>";
         // Logoutfail form
-        echo "<form action='index.php' method='post'>";
-        echo "<input type='submit' name='logoutfail' value='Back to Login' />";
-        echo "</form></p>";
+        //echo "<form action='index.php' method='post'>";
+        //echo "<input type='submit' name='logoutfail' value='Back to Login' />";
+        //echo "</form></p>";
       } else if($pw=="") {
         echo "<p>Password cannot be blank.</p>";
         // Logoutfail form
-        echo "<form action='index.php' method='post'>";
-        echo "<input type='submit' name='logoutfail' value='Back to Login' />";
-        echo "</form></p>";
+        //echo "<form action='index.php' method='post'>";
+        //echo "<input type='submit' name='logoutfail' value='Back to Login' />";
+        //echo "</form></p>";
       } else if($pw==$pw2){
         $hash = password_hash($pw, PASSWORD_DEFAULT);
         $sql_a = "INSERT INTO users(email, pw) VALUES ('";
@@ -57,18 +57,18 @@ function findUserByEmail($connect, $user_email, $pw, $pw2)
         } else {
           echo "<p>Failed to add user to database.</p>";
           // Logoutfail form
-          echo "<form action='index.php' method='post'>";
-          echo "<input type='submit' name='logoutfail' value='Back to Login' />";
-          echo "</form></p>";
+          //echo "<form action='index.php' method='post'>";
+          //echo "<input type='submit' name='logoutfail' value='Back to Login' />";
+          //echo "</form></p>";
         }
       }
       else
       {
         echo "<p>Re-typed password doesn't match.</p>";
         // Logoutfail form
-        echo "<form action='index.php' method='post'>";
-        echo "<input type='submit' name='logoutfail' value='Back to Login' />";
-        echo "</form></p>";
+        //echo "<form action='index.php' method='post'>";
+        //echo "<input type='submit' name='logoutfail' value='Back to Login' />";
+        //echo "</form></p>";
     }
   };
 }

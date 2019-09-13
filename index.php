@@ -22,6 +22,7 @@ require_once "src/findUserByEmail.php";
 require_once "src/loginForm.php";
 require_once "src/displayQuitButton.php";
 require_once "src/displayLogoutButton.php";
+require_once "src/getLocationInfo.php";
 
 $connect = dbConnect();
 
@@ -50,7 +51,22 @@ if(isset($_POST['login']))
 if (isset($_POST['play']))
 {
   $char_id = $_POST['char_id'];
+  $user_id = $_POST['user_id'];
+  $user_email = $_POST['user_email'];
+  $_SESSION['user_email'] = $user_email;
+  $_SESSION['user_id'] = $user_id;
   $_SESSION['char_id'] = $char_id;
+}
+
+// Check if quit form is submitted
+if(isset($_POST['quit']))
+{
+  $char_id = $_POST['char_id'];
+  $user_id = $_POST['user_id'];
+  $user_email = $_POST['user_email'];
+  $_SESSION['user_email'] = $user_email;
+  $_SESSION['user_id'] = $user_id;
+  charMakeOffline($connect, $char_id);
 }
 
 if (mysqli_errno($connect))
@@ -75,37 +91,30 @@ else
       displayLogoutButton();
 
       // Display the user's characters
-      displayUserCharacters($connect, $user_id);
+      displayUserCharacters($connect, $user_id, $user_email);
     }
     else
     {
-      // Activate character
-      charMakeOnline($connect, $char_id);
-      echo "<p>Your character is online (character id: " . $char_id . ")</p>";
+      // Activate character and get info
+      $char = charMakeOnline($connect, $char_id);
+      echo "<p>Online as " . $char['name'] . "</p>";
 
       // Display button to deactivate character and return to dashboard
-      displayQuitButton();
+      displayQuitButton($user_email, $user_id, $char_id);
 
-      // Info about the location available if character is online
+      // Get info about the location
+      $location = getLocationInfo($connect, $char['location_id']);
+      echo $location['name'];
 
     }
   }
 }
 
-// Check if quit form is submitted
-if(isset($_POST['quit']))
-{
-  charMakeOffline($connect, $char_id);
-  unset($_SESSION['char_id']);
-  header("Location: index.php");
-  exit;
-}
-
 // Check if the logout form is submitted
 if(isset($_POST['logout']))
 {
-  session_destroy();
-  header("Location: index.php");
+  //session_destroy();
+  //header("Location: index.php");
   exit;
 }
 
