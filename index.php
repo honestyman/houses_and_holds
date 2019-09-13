@@ -12,7 +12,7 @@
 
 <?php
 
-session_start();
+//session_start();
 
 require_once "src/charMakeOffline.php";
 require_once "src/charMakeOnline.php";
@@ -53,9 +53,9 @@ if (isset($_POST['play']))
   $_SESSION['char_id'] = $char_id;
 }
 
-if (mysqli_errno())
+if (mysqli_errno($connect))
 {
-  die('<p>Failed to connect to MySQL: '.mysql_error().'</p>');
+  die('<p>Failed to connect to MySQL: '.mysql_error($connect).'</p>');
 }
 else
 {
