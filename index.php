@@ -26,6 +26,7 @@ require_once "src/getLocationInfo.php";
 require_once "src/displayNavigation.php";
 require_once "src/charTravel.php";
 require_once "src/displayLocalObjects.php";
+require_once "src/displayLocalCharacters.php";
 
 $connect = dbConnect();
 
@@ -130,6 +131,11 @@ else
       // Display location banner posts, fixtures, and storage
       echo "<div id='location_objects'>";
       displayLocalObjects($connect, $user_email, $user_id, $char, $location);
+      echo "</div>";
+
+      // Display characters in location
+      echo "<div id='location_characters'>";
+      displayLocalCharacters($connect, $user_email, $user_id, $char, $location);
       echo "</div>";
 
       // Display navigation menu
