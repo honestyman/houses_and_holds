@@ -4,10 +4,12 @@ function writeLocalCharacters($connect, $location)
   $sql = "SELECT * FROM characters WHERE is_online=1 AND location_id=" . $location['id'];
   $result = mysqli_query($connect, $sql);
 
+  $path = "gamelogs/charsLoc" . $location['id'] . ".html";
+  $fp = fopen($path, 'w+');
+  //ftruncate($fp, 0);
+
   if($result->num_rows > 0)
   {
-    $path = "gamelogs/charsLoc" . $location['id'] . ".html";
-    $fp = fopen($path, 'w+');
     fwrite($fp, "<table><tr><th>People</th></tr>");
 
     while($row = $result->fetch_assoc())
@@ -32,7 +34,13 @@ function writeLocalCharacters($connect, $location)
     }
 
     fwrite($fp, "</table>");
-    fclose($fp);
+
   }
+  else
+  {
+    fwrite($fp, "No one here.");
+  }
+
+  fclose($fp);
 }
  ?>

@@ -67,20 +67,6 @@ if (isset($_POST['play']))
   writeLocalCharacters($connect, $char['location_id']);
 }
 
-// Check if quit form is submitted
-if(isset($_POST['quit']))
-{
-  $char_id = $_POST['char_id'];
-  $user_id = $_POST['user_id'];
-  $user_email = $_POST['user_email'];
-  $_SESSION['user_email'] = $user_email;
-  $_SESSION['user_id'] = $user_id;
-  $last_location_id = $_POST['last_location_id'];
-
-  charMakeOffline($connect, $char_id);
-  writeLocalCharacters($connect, $last_location_id);
-}
-
 // Check if travel form is submitted
 if(isset($_POST['travel']))
 {
@@ -91,12 +77,24 @@ if(isset($_POST['travel']))
   $_SESSION['char_id'] = $char_id;
   $old_loc_id = $_POST['old_loc_id'];
   $new_loc_id = $_POST['new_loc_id'];
-  //echo $char_id;
-  //echo $new_loc_id;
 
   charTravel($connect, $char_id, $new_loc_id);
   writeLocalCharacters($connect, $old_loc_id);
   writeLocalCharacters($connect, $new_loc_id);
+}
+
+// Check if quit form is submitted
+if(isset($_POST['quit']))
+{
+  $char_id = $_POST['char_id'];
+  $user_id = $_POST['user_id'];
+  $user_email = $_POST['user_email'];
+  $_SESSION['user_email'] = $user_email;
+  $_SESSION['user_id'] = $user_id;
+
+  $char = charMakeOffline($connect, $char_id);
+  writeLocalCharacters($connect, $char['location_id']);
+  //writeLocalCharacters($connect, $last_location_id);
 }
 
 if (mysqli_errno())
