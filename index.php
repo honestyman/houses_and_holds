@@ -75,10 +75,10 @@ if(isset($_POST['quit']))
   $user_email = $_POST['user_email'];
   $_SESSION['user_email'] = $user_email;
   $_SESSION['user_id'] = $user_id;
-  $location_id = $_POST['location_id'];
+  $last_location_id = $_POST['last_location_id'];
 
   charMakeOffline($connect, $char_id);
-  writeLocalCharacters($connect, $location_id);
+  writeLocalCharacters($connect, $last_location_id);
 }
 
 // Check if travel form is submitted
@@ -99,9 +99,9 @@ if(isset($_POST['travel']))
   writeLocalCharacters($connect, $new_loc_id);
 }
 
-if (mysqli_errno($connect))
+if (mysqli_errno())
 {
-  die('<p>Failed to connect to MySQL: '.mysqli_error($connect).'</p>');
+  die('<p>Failed to connect to MySQL: '.mysqli_error().'</p>');
 }
 else
 {
@@ -139,7 +139,6 @@ else
           {
             echo " of House ";
             echo $row['name'];
-            $char['house_name'] = $row['name'];
           }
         }
       }
