@@ -23,6 +23,9 @@ require_once "src/loginForm.php";
 require_once "src/displayQuitButton.php";
 require_once "src/displayLogoutButton.php";
 require_once "src/getLocationInfo.php";
+require_once "src/displayNavigation.php";
+require_once "src/charTravel.php";
+require_once "src/displayLocalObjects.php";
 
 $connect = dbConnect();
 
@@ -69,9 +72,23 @@ if(isset($_POST['quit']))
   charMakeOffline($connect, $char_id);
 }
 
+// Check if travel form is submitted
+if(isset($_POST['travel']))
+{
+  $char_id = $_POST['char_id'];
+  $user_id = $_POST['user_id'];
+  $user_email = $_POST['user_email'];
+  $_SESSION['user_email'] = $user_email;
+  $_SESSION['char_id'] = $char_id;
+  $new_loc_id = $_POST['new_loc_id'];
+  //echo $char_id;
+  //echo $new_loc_id;
+  charTravel($connect, $char_id, $new_loc_id);
+}
+
 if (mysqli_errno($connect))
 {
-  die('<p>Failed to connect to MySQL: '.mysql_error($connect).'</p>');
+  die('<p>Failed to connect to MySQL: '.mysqli_error($connect).'</p>');
 }
 else
 {
@@ -104,7 +121,21 @@ else
 
       // Get info about the location
       $location = getLocationInfo($connect, $char['location_id']);
-      echo $location['name'];
+      echo "<h2>" . $location['name'] . "</h2>";
+
+      // Display location image and description
+      echo "<div id='location_image'><img src='" . $location['image'] . "' alt='(placeholder for image)' height='300' width='400' /></div>";
+      echo "<div id='location_description'>" . $location['description'] . "</div>";
+
+      // Display location banner posts, fixtures, and storage
+      echo "<div id='location_objects'>";
+      displayLocalObjects($connect, $user_email, $user_id, $char, $location);
+      echo "</div>";
+
+      // Display navigation menu
+      displayNavigation($connect, $user_email, $user_id, $char_id, $location);
+
+
 
     }
   }
