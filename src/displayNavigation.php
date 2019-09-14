@@ -14,6 +14,7 @@ function displayNavigation($connect, $user_email, $user_id, $char_id, $location)
       echo "</td><td>";
       echo "<form action='index.php' method='post'>";
       echo "<input type='hidden' name='new_loc_id' value='" . $row['end_location'] . "' />";
+      echo "<input type='hidden' name='old_loc_id' value='" . $location['id'] . "' />";
       echo "<input type='hidden' name='char_id' value='" . $char_id . "' />";
       echo "<input type='hidden' name='user_id' value='" . $user_id . "' />";
       echo "<input type='hidden' name='user_email' value='" . $user_email . "' />";

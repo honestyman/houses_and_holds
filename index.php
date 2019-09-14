@@ -27,6 +27,8 @@ require_once "src/displayNavigation.php";
 require_once "src/charTravel.php";
 require_once "src/displayLocalObjects.php";
 require_once "src/displayLocalCharacters.php";
+require_once "src/readLocalCharacters.php";
+require_once "src/writeLocalCharacters.php";
 
 $connect = dbConnect();
 
@@ -81,10 +83,14 @@ if(isset($_POST['travel']))
   $user_email = $_POST['user_email'];
   $_SESSION['user_email'] = $user_email;
   $_SESSION['char_id'] = $char_id;
+  $old_loc_id = $_POST['old_loc_id'];
   $new_loc_id = $_POST['new_loc_id'];
   //echo $char_id;
   //echo $new_loc_id;
+
   charTravel($connect, $char_id, $new_loc_id);
+  writeLocalCharacters($connect, $old_loc_id);
+  writeLocalCharacters($connect, $new_loc_id);
 }
 
 if (mysqli_errno($connect))
@@ -135,7 +141,7 @@ else
 
       // Display characters in location
       echo "<div id='location_characters'>";
-      displayLocalCharacters($connect, $user_email, $user_id, $char, $location);
+      readLocalCharacters($connect, $location);
       echo "</div>";
 
       // Display navigation menu
@@ -158,5 +164,10 @@ if(isset($_POST['logout']))
 ?>
 
 </div>
+
+<script type="text/javascript">
+setInterval (displayLocalCharacters, 2500);
+</script>
+
 </body>
 </html>
