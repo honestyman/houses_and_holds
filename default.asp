@@ -1,4 +1,5 @@
-<%EnableSessionState=False
+<%
+EnableSessionState=False
 host = Request.ServerVariables("HTTP_HOST")
 
 if host = "housesandholds.com" or host = "www.housesandholds.com" then
