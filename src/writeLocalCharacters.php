@@ -6,7 +6,7 @@ function writeLocalCharacters($connect, $location)
 
   if($result->num_rows > 0)
   {
-    $path = "src/charsLoc" . $location['id'] . ".html";
+    $path = "gamelogs/charsLoc" . $location['id'] . ".html";
     $fp = fopen($path, 'w+');
     fwrite($fp, "<table><tr><th>People</th></tr>");
 

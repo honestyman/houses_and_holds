@@ -62,6 +62,9 @@ if (isset($_POST['play']))
   $_SESSION['user_email'] = $user_email;
   $_SESSION['user_id'] = $user_id;
   $_SESSION['char_id'] = $char_id;
+
+  $char = charMakeOnline($connect, $char_id);
+  writeLocalCharacters($connect, $char['location_id']);
 }
 
 // Check if quit form is submitted
@@ -72,7 +75,10 @@ if(isset($_POST['quit']))
   $user_email = $_POST['user_email'];
   $_SESSION['user_email'] = $user_email;
   $_SESSION['user_id'] = $user_id;
+  $location_id = $_POST['location_id'];
+
   charMakeOffline($connect, $char_id);
+  writeLocalCharacters($connect, $location_id);
 }
 
 // Check if travel form is submitted
@@ -122,9 +128,10 @@ else
       // Activate character and get info
       $char = charMakeOnline($connect, $char_id);
       echo "<p>Online as " . $char['name'] . "</p>";
+      $location_id = $char['location_id'];
 
       // Display button to deactivate character and return to dashboard
-      displayQuitButton($user_email, $user_id, $char_id);
+      displayQuitButton($user_email, $user_id, $char_id, $location_id);
 
       // Get info about the location
       $location = getLocationInfo($connect, $char['location_id']);
@@ -166,7 +173,21 @@ if(isset($_POST['logout']))
 </div>
 
 <script type="text/javascript">
-setInterval (displayLocalCharacters, 2500);
+function loadPeople()
+{
+  var path = "gamelogs/charsLoc" + "<?php echo $_POST['location_id'] ?>" + ".html"
+	$.ajax
+  ({
+		url: path,
+		cache: false,
+		success: function(html)
+    {
+			$("#location_characters").html(html);
+	  },
+	});
+}
+
+setInterval (loadPeople, 2500);
 </script>
 
 </body>
