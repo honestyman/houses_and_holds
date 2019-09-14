@@ -127,8 +127,24 @@ else
     {
       // Activate character and get info
       $char = charMakeOnline($connect, $char_id);
-      echo "<p>Online as " . $char['name'] . "</p>";
-      $location_id = $char['location_id'];
+      echo "<p>Online as " . $char['name'];
+      if(!is_null($char['house_id']))
+      {
+        $sql = "SELECT name FROM houses WHERE id=" . $char['house_id'];
+        $result = mysqli_query($connect, $sql);
+
+        if($result->num_rows > 0)
+        {
+          while($row = $result->fetch_assoc())
+          {
+            echo " of House ";
+            echo $row['name'];
+            $char['house_name'] = $row['name'];
+          }
+        }
+      }
+      echo "</p>";
+      $_POST['location_id'] = $char['location_id'];
 
       // Display button to deactivate character and return to dashboard
       displayQuitButton($user_email, $user_id, $char_id, $location_id);

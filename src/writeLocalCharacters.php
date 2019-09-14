@@ -14,6 +14,20 @@ function writeLocalCharacters($connect, $location)
     {
       fwrite($fp, "<tr><td>");
       fwrite($fp, $row['name']);
+      if(!is_null($row['house_id']))
+      {
+        $sql2 = "SELECT name FROM houses WHERE id=" . $row['house_id'];
+        $result2 = mysqli_query($connect, $sql2);
+
+        if($result2->num_rows > 0)
+        {
+          while($row2 = $result2->fetch_assoc())
+          {
+            fwrite($fp, " ");
+            fwrite($fp, $row2['name']);
+          }
+        }
+      }
       fwrite($fp, "</td></tr>");
     }
 
