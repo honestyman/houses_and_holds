@@ -18,6 +18,31 @@ function displayLocalObjects($connect, $user_email, $user_id, $char, $location)
       {
         echo "<tr><td>";
         echo $row1['name'];
+
+        // Add interaction option, if available
+        $class_id = 1; // All banner posts have class id 1
+        $sqli = "SELECT * FROM class_interactions WHERE class_id=" . $class_id;
+        $resulti = mysqli_query($connect, $sqli);
+
+        if($resulti->num_rows > 0)
+        {
+          echo "</td><td>";
+          echo "<form action='interaction.php' method='post'>";
+          echo "<select name='interaction'>";
+
+          while($rowi = $resulti->fetch_assoc())
+          {
+            echo "<option value='" . $rowi['name'] . "'>" . $rowi['displayname'] . "</option>";
+          }
+
+          echo "</select>";
+          echo "<input type='hidden' name='user_email' value='" . $user_email . "' />";
+          echo "<input type='hidden' name='user_id' value='" . $user_id . "' />";
+          echo "<input type='hidden' name='char_id' value='" . $char['id'] . "' />";
+          echo "<input type='submit' name='interact' value='Do' />";
+          echo "</form>";
+        }
+
         echo "</td></tr>";
       }
     }
@@ -28,6 +53,31 @@ function displayLocalObjects($connect, $user_email, $user_id, $char, $location)
       {
         echo "<tr><td>";
         echo $row2['name'];
+
+        // Add interaction option, if available
+        $class_id = $row2['class_id']; // Fixtures each have a class depending on what they do
+        $sqli = "SELECT * FROM class_interactions WHERE class_id=" . $class_id;
+        $resulti = mysqli_query($connect, $sqli);
+
+        if($resulti->num_rows > 0)
+        {
+          echo "</td><td>";
+          echo "<form action='interaction.php' method='post'>";
+          echo "<select name='interaction'>";
+
+          while($rowi = $resulti->fetch_assoc())
+          {
+            echo "<option value='" . $rowi['name'] . "'>" . $rowi['displayname'] . "</option>";
+          }
+
+          echo "</select>";
+          echo "<input type='hidden' name='user_email' value='" . $user_email . "' />";
+          echo "<input type='hidden' name='user_id' value='" . $user_id . "' />";
+          echo "<input type='hidden' name='char_id' value='" . $char['id'] . "' />";
+          echo "<input type='submit' name='interact' value='Do' />";
+          echo "</form>";
+        }
+
         echo "</td></tr>";
       }
     }
@@ -38,6 +88,31 @@ function displayLocalObjects($connect, $user_email, $user_id, $char, $location)
       {
         echo "<tr><td>";
         echo $row3['name'];
+
+        // Add interaction option, if available
+        $class_id = 2; // All storage units have class id 2
+        $sqli = "SELECT * FROM class_interactions WHERE class_id=" . $class_id;
+        $resulti = mysqli_query($connect, $sqli);
+
+        if($resulti->num_rows > 0)
+        {
+          echo "</td><td>";
+          echo "<form action='interaction.php' method='post'>";
+          echo "<select name='interaction'>";
+
+          while($rowi = $resulti->fetch_assoc())
+          {
+            echo "<option value='" . $rowi['name'] . "'>" . $rowi['displayname'] . "</option>";
+          }
+
+          echo "</select>";
+          echo "<input type='hidden' name='user_email' value='" . $user_email . "' />";
+          echo "<input type='hidden' name='user_id' value='" . $user_id . "' />";
+          echo "<input type='hidden' name='char_id' value='" . $char['id'] . "' />";
+          echo "<input type='submit' name='interact' value='Do' />";
+          echo "</form>";
+        }
+
         echo "</td></tr>";
       }
     }
