@@ -4,7 +4,7 @@ function displayLocalObjects($connect, $user_email, $user_id, $char, $location)
   $sql1 = "SELECT * FROM banner_posts WHERE location_id=" . $location['id'];
   $result1 = mysqli_query($connect, $sql1);
   $sql2 = "SELECT * FROM fixtures WHERE location_id=" . $location['id'];
-  $result1 = mysqli_query($connect, $sql2);
+  $result2 = mysqli_query($connect, $sql2);
   $sql3 = "SELECT * FROM storage WHERE location_id=" . $location['id'];
   $result3 = mysqli_query($connect, $sql3);
 
