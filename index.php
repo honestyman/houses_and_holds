@@ -97,6 +97,14 @@ if(isset($_POST['quit']))
   //writeLocalCharacters($connect, $last_location_id);
 }
 
+if(isset($_POST['returntodash']))
+{
+  $user_id = $_POST['user_id'];
+  $user_email = $_POST['user_email'];
+  $_SESSION['user_email'] = $user_email;
+  $_SESSION['user_id'] = $user_id;
+}
+
 if (mysqli_errno())
 {
   die('<p>Failed to connect to MySQL: '.mysqli_error().'</p>');

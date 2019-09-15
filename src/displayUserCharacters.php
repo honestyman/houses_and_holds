@@ -26,7 +26,11 @@ function displayUserCharacters($connect, $user_id, $user_email)
     }
     else
     {
-      echo "<p>You have no living character. Create one!</p>";
+      echo "<p>You have no living character. ";
+      echo "<form action='createcharacter.php' method='post'>";
+      echo "<input type='hidden' name='user_id' value='" . $user_id . "' />";
+      echo "<input type='hidden' name='user_email' value='" . $user_email . "' />";
+      echo "<input type='submit' name='newchar' value='Create one!' /></p>";
     };
 
     $sql_a = "SELECT name, id FROM characters WHERE user_id = '";
