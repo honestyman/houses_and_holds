@@ -7,7 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-<div>
+<div id='wrap'>
   <h1>Houses and Holds</h1>
 
 <?php
@@ -103,8 +103,6 @@ if (mysqli_errno())
 }
 else
 {
-
-
   if(!isset($_SESSION['user_email']))
   {
     loginForm();
@@ -166,9 +164,6 @@ else
 
       // Display navigation menu
       displayNavigation($connect, $user_email, $user_id, $char_id, $location);
-
-
-
     }
   }
 }
