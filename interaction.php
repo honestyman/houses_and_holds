@@ -11,14 +11,40 @@
   <h1>Houses and Holds</h1>
 
 <?php
-if(isset($_POST['interact']))
-{
-  $interaction = $_POST['interaction'];
-  $user_id = $_POST['user_id'];
-  $user_email = $_POST['user_email'];
-  $char_id = $_POST['char_id'];
 
-  echo $interaction;
+require_once "src/dbConnect.php";
+require_once "src/inspectBanner.php";
+require_once "src/captureBanner.php";
+
+$connect = dbConnect();
+
+if (mysqli_errno())
+{
+  die('<p>Failed to connect to MySQL: '.mysqli_error().'</p>');
+}
+else
+{
+
+  if(isset($_POST['interact']))
+  {
+    $interaction = $_POST['interaction'];
+    $user_id = $_POST['user_id'];
+    $user_email = $_POST['user_email'];
+    $char_id = $_POST['char_id'];
+    $obj_id = $_POST['obj_id'];
+
+    //echo $interaction;
+
+    if($interaction=='inspect_banner')
+    {
+      inspectBanner($connect, $obj_id);
+    }
+
+    if($interaction=='capture_banner')
+    {
+      captureBanner($connect, $obj_id, $char_id);
+    }
+  }
 }
 
 echo "<form action='index.php' method='post'>";

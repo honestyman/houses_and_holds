@@ -131,7 +131,7 @@ else
     {
       // Activate character and get info
       $char = charMakeOnline($connect, $char_id);
-      echo "<p>Online as " . $char['name'];
+      echo "<p>" . $char['name'];
       if(!is_null($char['house_id']))
       {
         $sql = "SELECT name FROM houses WHERE id=" . $char['house_id'];
@@ -157,7 +157,7 @@ else
       echo "<h2>" . $location['name'] . "</h2>";
 
       // Display location image and description
-      echo "<div id='location_image'><img src='" . $location['image'] . "' alt='(placeholder for image)' height='300' width='400' /></div>";
+      //echo "<div id='location_image'><img src='" . $location['image'] . "' alt='(placeholder for image)' height='300' width='400' /></div>";
       echo "<div id='location_description'>" . $location['description'] . "</div>";
 
       // Display location banner posts, fixtures, and storage

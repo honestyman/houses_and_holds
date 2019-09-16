@@ -36,6 +36,7 @@ function displayLocalObjects($connect, $user_email, $user_id, $char, $location)
           }
 
           echo "</select>";
+          echo "<input type='hidden' name='obj_id' value='" . $row1['id'] . "' />";
           echo "<input type='hidden' name='user_email' value='" . $user_email . "' />";
           echo "<input type='hidden' name='user_id' value='" . $user_id . "' />";
           echo "<input type='hidden' name='char_id' value='" . $char['id'] . "' />";
@@ -71,6 +72,7 @@ function displayLocalObjects($connect, $user_email, $user_id, $char, $location)
           }
 
           echo "</select>";
+          echo "<input type='hidden' name='obj_id' value='" . $row2['id'] . "' />";
           echo "<input type='hidden' name='user_email' value='" . $user_email . "' />";
           echo "<input type='hidden' name='user_id' value='" . $user_id . "' />";
           echo "<input type='hidden' name='char_id' value='" . $char['id'] . "' />";
@@ -106,6 +108,7 @@ function displayLocalObjects($connect, $user_email, $user_id, $char, $location)
           }
 
           echo "</select>";
+          echo "<input type='hidden' name='obj_id' value='" . $row3['id'] . "' />";
           echo "<input type='hidden' name='user_email' value='" . $user_email . "' />";
           echo "<input type='hidden' name='user_id' value='" . $user_id . "' />";
           echo "<input type='hidden' name='char_id' value='" . $char['id'] . "' />";
