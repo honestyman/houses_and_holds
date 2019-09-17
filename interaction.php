@@ -18,6 +18,7 @@ require_once "src/captureBanner.php";
 require_once "src/registerHouse.php";
 require_once "src/pledgeHouse.php";
 require_once "src/viewPledge.php";
+require_once "src/reviewPledges.php";
 
 $connect = dbConnect();
 
@@ -61,6 +62,11 @@ else
     if($interaction=='view_pledge')
     {
       viewPledge($connect, $char_id, $user_email, $user_id);
+    }
+
+    if($interaction=='review_pledges')
+    {
+      reviewPledges($connect, $char_id, $user_email, $user_id);
     }
   }
 
@@ -144,6 +150,66 @@ else
     $sqld = "DELETE FROM pledges WHERE char_id=" . $char_id;
     mysqli_query($connect, $sqld);
     echo "<p>Pledge withdrawn.</p>";
+  }
+
+  if(isset($_POST['decide_pledge']))
+  {
+    $user_id = $_POST['user_id'];
+    $user_email = $_POST['user_email'];
+    $char_id = $_POST['char_id'];
+    $decision = $_POST['decision'];
+    $pledge_id = $_POST['pledge_id'];
+
+    if($decision=="accept")
+    {
+      // accept
+      $sqlu = "UPDATE pledges SET accepted=1 WHERE id=" . $pledge_id;
+      mysqli_query($connect, $sqlu);
+
+      // get the house to pass to the pledge
+      $sqls = "SELECT * FROM characters WHERE id=" . $char_id;
+      $ress = mysqli_query($connect, $sqls);
+
+      if($ress->num_rows == 1)
+      {
+        // do things
+        $char = $ress->fetch_assoc();
+        $house_id = $char['house_id'];
+
+        $sqlp = "SELECT * FROM pledges WHERE id=" . $pledge_id;
+        $resp = mysqli_query($connect, $sqlp);
+
+        if($resp->num_rows == 1)
+        {
+          // get pc id
+          $rowp = $resp->fetch_assoc();
+          $pc_id = $rowp['char_id'];
+
+          $sqlu = "UPDATE characters SET house_id=" . $house_id . " WHERE id=" . $pc_id;
+          mysqli_query($connect, $sqlu);
+          echo "<p>Pledge accepted.</p>";
+        }
+        else
+        {
+          echo "<p>Game broke.</p>";
+        }
+      }
+      else
+      {
+        echo "<p>Oh shit wtf</p>";
+      }
+    }
+    else if($decision=="reject")
+    {
+      // reject
+      $sqlu = "UPDATE pledges SET rejected=1 WHERE id=" . $pledge_id;
+      mysqli_query($connect, $sqlu);
+      echo "<p>Pledge rejected.</p>";
+    }
+    else
+    {
+      echo "<p>Oh this is bad.</p>";
+    }
   }
 }
 
