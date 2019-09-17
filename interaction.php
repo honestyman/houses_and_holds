@@ -17,6 +17,7 @@ require_once "src/inspectBanner.php";
 require_once "src/captureBanner.php";
 require_once "src/registerHouse.php";
 require_once "src/pledgeHouse.php";
+require_once "src/viewPledge.php";
 
 $connect = dbConnect();
 
@@ -55,6 +56,11 @@ else
     if($interaction=='pledge_house')
     {
       pledgeHouse($connect, $char_id, $user_email, $user_id);
+    }
+
+    if($interaction=='view_pledge')
+    {
+      viewPledge($connect, $char_id, $user_email, $user_id);
     }
   }
 
@@ -127,6 +133,17 @@ else
       mysqli_query($connect, $sqli);
       echo "<p>Pledge created.</p>";
     }
+  }
+
+  if(isset($_POST['withdraw_pledge']))
+  {
+    $user_id = $_POST['user_id'];
+    $user_email = $_POST['user_email'];
+    $char_id = $_POST['char_id'];
+
+    $sqld = "DELETE FROM pledges WHERE char_id=" . $char_id;
+    mysqli_query($connect, $sqld);
+    echo "<p>Pledge withdrawn.</p>";
   }
 }
 
