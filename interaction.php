@@ -16,6 +16,7 @@ require_once "src/dbConnect.php";
 require_once "src/inspectBanner.php";
 require_once "src/captureBanner.php";
 require_once "src/registerHouse.php";
+require_once "src/pledgeHouse.php";
 
 $connect = dbConnect();
 
@@ -49,6 +50,11 @@ else
     if($interaction=='register_house')
     {
       registerHouse($connect, $char_id, $user_email, $user_id);
+    }
+
+    if($interaction=='pledge_house')
+    {
+      pledgeHouse($connect, $char_id, $user_email, $user_id);
     }
   }
 
@@ -87,6 +93,39 @@ else
       {
         echo "<p>Uh oh! Something went wrong.</p>";
       }
+    }
+  }
+
+  if(isset($_POST['pledge_house']))
+  {
+    $user_id = $_POST['user_id'];
+    $user_email = $_POST['user_email'];
+    $char_id = $_POST['char_id'];
+    $house_name = htmlspecialchars($_POST['house_name']);
+
+    $sqls = "SELECT * FROM houses WHERE name='" . $house_name . "'";
+    $results = mysqli_query($connect, $sqls);
+
+    if($results->num_rows < 1)
+    {
+      echo "<p>It looks like the House you entered doesn't exist. Try a different one below or go back to create it.</p>";
+      pledgeHouse($connect, $char_id, $user_email, $user_id);
+    }
+    else if($results->num_rows > 1)
+    {
+      echo "<p>Uh oh! Something went wrong.</p>";
+    }
+    else
+    {
+      // Delete previous pledges by character
+      $sqld = "DELETE FROM pledges WHERE char_id=" . $char_id;
+      mysqli_query($connect, $sqld);
+
+      // Create new pledge
+      $rows = $results->fetch_assoc();
+      $sqli = "INSERT INTO pledges(char_id, house_id) VALUES ('" . $char_id . "', '" . $rows['id'] . "')";
+      mysqli_query($connect, $sqli);
+      echo "<p>Pledge created.</p>";
     }
   }
 }
