@@ -1,5 +1,5 @@
 <?php
-require_once "dbConnect.php";
+require_once "../src/dbConnect.php";
 
 $connect = dbConnect();
 
@@ -22,24 +22,36 @@ if (mysqli_errno())
 else
 {
   // cron reduce fullness
-  $sqls = "SELECT * FROM characters WHERE death_date IS NULL";
+  $sqls = "SELECT * FROM characters WHERE death_date IS NULL AND birth_date IS NOT NULL";
   $ress = mysqli_query($connect, $sqls);
 
   if($ress->num_rows > 0)
   {
     while($char = $ress->fetch_assoc())
     {
-      if($char['fullness']==0)
+      // roll for old age death
+
+      // Calculate how old character is in days
+      $birth = strtotime($char['birth_date']);
+      $now = new DateTime('NOW');
+      $now = $now->format('Y-m-d H:i:s');
+      $now = strtotime($now);
+      $days = ($now-$birth)/(60*60*24);
+
+      // calculate probability of death based on age
+      $L = 100;
+      $k = 0.5;
+      $xo = 80;
+
+      $prob = $L / (1 + exp(-$k * ($days - $xo)));
+
+      // roll a random number between 0 and 100
+      $rand = rand(0, 100);
+
+      // char dies if rand is less than prob
+      if($rand < $prob)
       {
-        // dies
         $sqlu = "UPDATE characters SET death_date=CURRENT_TIMESTAMP WHERE id=" . $char['id'];
-        mysqli_query($connect, $sqlu);
-      }
-      else
-      {
-        // fullness drops by 1
-        $new_fullness = $char['fullness'] - 1;
-        $sqlu = "UPDATE characters SET fullness=" . $new_fullness . " WHERE id=" . $char['id'];
         mysqli_query($connect, $sqlu);
       }
     }

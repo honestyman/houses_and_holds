@@ -29,6 +29,7 @@ require_once "src/displayLocalObjects.php";
 require_once "src/displayLocalCharacters.php";
 require_once "src/readLocalCharacters.php";
 require_once "src/writeLocalCharacters.php";
+require_once "src/displayCharacterStatus.php";
 
 $connect = dbConnect();
 
@@ -129,9 +130,12 @@ else
     }
     else
     {
+      // Display button to deactivate character and return to dashboard
+      displayQuitButton($user_email, $user_id, $char_id, $location_id);
+
       // Activate character and get info
       $char = charMakeOnline($connect, $char_id);
-      echo "<p>" . $char['name'];
+      echo "<h2>" . $char['name'];
       if(!is_null($char['house_id']))
       {
         $sql = "SELECT name FROM houses WHERE id=" . $char['house_id'];
@@ -146,11 +150,12 @@ else
           }
         }
       }
-      echo "</p>";
-      $_POST['location_id'] = $char['location_id'];
+      echo "</h2>";
 
-      // Display button to deactivate character and return to dashboard
-      displayQuitButton($user_email, $user_id, $char_id, $location_id);
+      // Display character status
+      displayCharacterStatus($connect, $char);
+
+      $_POST['location_id'] = $char['location_id'];
 
       // Get info about the location
       $location = getLocationInfo($connect, $char['location_id']);
