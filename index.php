@@ -107,7 +107,7 @@ if(isset($_POST['returntodash']))
 
 if (mysqli_errno())
 {
-  die('<p>Failed to connect to MySQL: '.mysqli_error().'</p>');
+  die('<p>Failed to connect to MySQL: '. mysqli_error() .'</p>');
 }
 else
 {
