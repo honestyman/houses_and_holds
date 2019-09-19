@@ -1,4 +1,6 @@
 <?php
+require_once "characterAge.php";
+
 function captureBanner($connect, $banner_id, $char_id)
 {
   // Get banner info
@@ -26,62 +28,72 @@ function captureBanner($connect, $banner_id, $char_id)
     echo "<p>Bad game! No cookie for you!</p>";
   }
 
-  if(is_null($rowc['house_id']))
+  $age = characterAge($rowc['birth_date']);
+
+  if($age == 'child')
   {
-    echo "<p>You must belong to a House to capture a banner.</p>";
+    // children can't capture banners posts
+    echo "<p>Children cannot capture banner posts.</p>";
   }
-  else
+  else if($age == 'youth' || $age == 'adult' || $age == 'elder')
   {
-    if($rowb['house_id']==$rowc['house_id'])
+    if(is_null($rowc['house_id']))
     {
-      echo "<p>Your House already controls this banner.</p>";
+      echo "<p>You must belong to a House to capture a banner.</p>";
     }
-    else {
-      // Check character's age first
-
-      // Capture banner
-      $sqlcap = "UPDATE banner_posts SET house_id=" . $rowc['house_id'] . " WHERE id=" . $banner_id;
-      mysqli_query($connect, $sqlcap);
-      echo "<p>Banner post captured!</p>";
-
-      // Check other Hold banners
-      $sqlloc = "SELECT * FROM locations WHERE id=" . $rowb['location_id'];
-      $resloc = mysqli_query($connect, $sqlloc);
-
-      if($resloc->num_rows==1)
+    else
+    {
+      if($rowb['house_id']==$rowc['house_id'])
       {
-        $rowloc = $resloc->fetch_assoc();
+        echo "<p>Your House already controls this banner.</p>";
       }
-      else
-      {
-        echo "<p>Bad game! No cookie for you!</p>";
-      }
+      else {
+        // Check character's age first
 
-      $sqlban = "SELECT banner_posts.id AS id, banner_posts.house_id AS house_id FROM banner_posts LEFT JOIN locations ON banner_posts.location_id = locations.id WHERE locations.hold_id=" . $rowloc['hold_id'];
-      $resban = mysqli_query($connect, $sqlban);
+        // Capture banner
+        $sqlcap = "UPDATE banner_posts SET house_id=" . $rowc['house_id'] . " WHERE id=" . $banner_id;
+        mysqli_query($connect, $sqlcap);
+        echo "<p>Banner post captured!</p>";
 
-      if($resban->num_rows>0)
-      {
-        $capture = 1;
+        // Check other Hold banners
+        $sqlloc = "SELECT * FROM locations WHERE id=" . $rowb['location_id'];
+        $resloc = mysqli_query($connect, $sqlloc);
 
-        while($rowban = $resban->fetch_assoc())
+        if($resloc->num_rows==1)
         {
-          //echo $rowban['house_id'] . "<br />";
-          if(!is_null($rowban['id']))
-          {
-            if(is_null($rowban['house_id'])){$capture=0;}
-            if($rowban['house_id']!=$rowc['house_id']){$capture=0;}
-          }
-
+          $rowloc = $resloc->fetch_assoc();
+        }
+        else
+        {
+          echo "<p>Bad game! No cookie for you!</p>";
         }
 
-        //echo $capture;
+        $sqlban = "SELECT banner_posts.id AS id, banner_posts.house_id AS house_id FROM banner_posts LEFT JOIN locations ON banner_posts.location_id = locations.id WHERE locations.hold_id=" . $rowloc['hold_id'];
+        $resban = mysqli_query($connect, $sqlban);
 
-        if($capture==1)
+        if($resban->num_rows>0)
         {
-          $sqlhold = "UPDATE holds SET house_id=" . $rowc['house_id'] . " WHERE id=" . $rowloc['hold_id'];
-          mysqli_query($connect, $sqlhold);
-          echo "<p>Hold captured!</p>";
+          $capture = 1;
+
+          while($rowban = $resban->fetch_assoc())
+          {
+            //echo $rowban['house_id'] . "<br />";
+            if(!is_null($rowban['id']))
+            {
+              if(is_null($rowban['house_id'])){$capture=0;}
+              if($rowban['house_id']!=$rowc['house_id']){$capture=0;}
+            }
+
+          }
+
+          //echo $capture;
+
+          if($capture==1)
+          {
+            $sqlhold = "UPDATE holds SET house_id=" . $rowc['house_id'] . " WHERE id=" . $rowloc['hold_id'];
+            mysqli_query($connect, $sqlhold);
+            echo "<p>Hold captured!</p>";
+          }
         }
       }
     }
