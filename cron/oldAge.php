@@ -8,9 +8,9 @@ if (mysqli_errno())
   // warn me
   $to = "admin@housesandholds.com";
 
-  $subject = "Cron job failure - hunger.php";
+  $subject = "Cron job failure - olgAge.php";
 
-  $message = "<p>The hunger.php cron job failed to connect to the database. Warning message: <br />";
+  $message = "<p>The oldAge.php cron job failed to connect to the database. Warning message: <br />";
   $message .= mysqli_errno() . "</p>";
 
   $headers = "From: Admin Houses and Holds <admin@housesandholds.com>\r\n";
@@ -39,14 +39,14 @@ else
       $days = ($now-$birth)/(60*60*24);
 
       // calculate probability of death based on age
-      $L = 100;
+      $L = 100.0;
       $k = 0.5;
-      $xo = 80;
+      $xo = 80.0;
 
       $prob = $L / (1 + exp(-$k * ($days - $xo)));
 
       // roll a random number between 0 and 100
-      $rand = rand(0, 100);
+      $rand = rand(1, 100);
 
       // char dies if rand is less than prob
       if($rand < $prob)

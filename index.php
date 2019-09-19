@@ -30,6 +30,7 @@ require_once "src/displayLocalCharacters.php";
 require_once "src/readLocalCharacters.php";
 require_once "src/writeLocalCharacters.php";
 require_once "src/displayCharacterStatus.php";
+require_once "src/updateInventory.php";
 
 $connect = dbConnect();
 
@@ -154,6 +155,9 @@ else
 
       // Display character status
       displayCharacterStatus($connect, $char);
+
+      // Create or update character inventory
+      updateInventory($connect, $char);
 
       $_POST['location_id'] = $char['location_id'];
 

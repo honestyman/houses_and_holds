@@ -63,7 +63,7 @@ else
     {
       // Add character
       $sql2 = "INSERT INTO characters(user_id, name) VALUES (" . $user_id . ", '" . $char_name . "')";
-      $result2 = mysqli_query($connect, $sql2);
+      mysqli_query($connect, $sql2);
       echo "<p>Character created!</p>";
     }
   }
