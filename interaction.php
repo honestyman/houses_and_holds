@@ -19,6 +19,7 @@ require_once "src/registerHouse.php";
 require_once "src/pledgeHouse.php";
 require_once "src/viewPledge.php";
 require_once "src/reviewPledges.php";
+require_once "src/openStorage.php";
 
 $connect = dbConnect();
 
@@ -67,6 +68,54 @@ else
     if($interaction=='review_pledges')
     {
       reviewPledges($connect, $char_id, $user_email, $user_id);
+    }
+
+    if($interaction=='open_storage')
+    {
+      openStorage($connect, $char_id, $user_email, $user_id, $obj_id);
+    }
+  }
+
+  if(isset($_POST['move_item']))
+  {
+    $item_id = $_POST['item_id'];
+    $storage_id = $_POST['storage_id'];
+    $inventory_id = $_POST['inventory_id'];
+    $user_email = $_POST['user_email'];
+    $user_id = $_POST['user_id'];
+    $char_id = $_POST['char_id'];
+
+    $sqls = "SELECT * FROM items WHERE id=" . $item_id;
+    $ress = mysqli_query($connect, $sqls);
+
+    if($ress->num_rows == 1)
+    {
+      // check where the item is
+      $item = $ress->fetch_assoc();
+
+      if($item['storage_id']==$storage_id)
+      {
+        // move to inventory
+        $sqlu = "UPDATE items SET storage_id=" . $inventory_id . " WHERE id=" . $item_id;
+        mysqli_query($connect, $sqlu);
+      }
+      else if($item['storage_id']==$inventory_id)
+      {
+        // move to storage unit
+        $sqlu = "UPDATE items SET storage_id=" . $storage_id . " WHERE id=" . $item_id;
+        mysqli_query($connect, $sqlu);
+      }
+      else
+      {
+        echo "<p>Someone else has taken this item.</p>";
+      }
+
+      // display storage unit again
+      openStorage($connect, $char_id, $user_email, $user_id, $storage_id);
+    }
+    else
+    {
+      echo "<p>Moving item has gone wrong.</p>";
     }
   }
 

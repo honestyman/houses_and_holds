@@ -12,7 +12,7 @@ function updateInventory($connect, $char)
   else { echo "wtf mate"; }
 
   // Check whether a storage unit already exists, create it if it doesn't
-  $sqls = "SELECT * FROM storage WHERE char_id=" . $char['id'];
+  $sqls = "SELECT * FROM storage WHERE character_id=" . $char['id'];
   $ress = mysqli_query($connect, $sqls);
 
   if($ress->num_rows == 0)
