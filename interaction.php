@@ -20,6 +20,7 @@ require_once "src/pledgeHouse.php";
 require_once "src/viewPledge.php";
 require_once "src/reviewPledges.php";
 require_once "src/openStorage.php";
+require_once "src/openInventory.php";
 
 $connect = dbConnect();
 
@@ -73,6 +74,27 @@ else
     if($interaction=='open_storage')
     {
       openStorage($connect, $char_id, $user_email, $user_id, $obj_id);
+    }
+  }
+
+  if(isset($_POST['open_inventory']))
+  {
+    $user_email = $_POST['user_email'];
+    $user_id = $_POST['user_id'];
+    $char_id = $_POST['char_id'];
+
+    // find character's inventory
+    $sqls = "SELECT * FROM storage WHERE character_id=" . $char_id;
+    $ress = mysqli_query($connect, $sqls);
+
+    if($ress->num_rows == 1)
+    {
+      $inventory = $ress->fetch_assoc();
+      openInventory($connect, $user_email, $user_id, $char_id, $inventory);
+    }
+    else
+    {
+      echo "<p>Uh oh!</p>";
     }
   }
 
