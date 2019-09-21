@@ -27,7 +27,7 @@ function eat($connect, $char_id, $user_email, $user_id, $food_id)
         $creation = strtotime($food['created']);
         $now = new DateTime('NOW');
         $now = $now->format('Y-m-d H:i:s');
-        $now = strtotime($now);
+        $now = strtotime($now) + (3600*6);
         $duration = $now-$creation;
 
         if($duration > $food['duration_s'])

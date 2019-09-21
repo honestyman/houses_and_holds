@@ -13,7 +13,7 @@ function charMakeOffline($connect, $char_id)
     {
       $now = new DateTime('NOW');
       $now = $now->format('Y-m-d H:i:s');
-      $now = strtotime($now);
+      $now = strtotime($now) + (3600*6);
       $last_aggression = strtotime($char['last_aggression']);
       $aggression_interval = $now-$last_aggression;
     }
@@ -25,7 +25,7 @@ function charMakeOffline($connect, $char_id)
 
       $sql = "SELECT * FROM characters WHERE id=" . $char_id;
       $result = mysqli_query($connect, $sql);
-      
+
       if($result->num_rows == 1)
       {
         $char = $result->fetch_assoc();

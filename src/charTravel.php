@@ -13,7 +13,7 @@ function charTravel($connect, $char_id, $new_loc_id)
     {
       $now = new DateTime('NOW');
       $now = $now->format('Y-m-d H:i:s');
-      $now = strtotime($now);
+      $now = strtotime($now) + (3600*6);
       $last_aggression = strtotime($char['last_aggression']);
       $aggression_interval = $now-$last_aggression;
     }

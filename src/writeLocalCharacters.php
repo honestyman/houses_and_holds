@@ -16,6 +16,8 @@ function writeLocalCharacters($connect, $location)
     {
       fwrite($fp, "<tr><td>");
       fwrite($fp, $row['name']);
+
+      // write character house if they have one
       if(!is_null($row['house_id']))
       {
         $sql2 = "SELECT name FROM houses WHERE id=" . $row['house_id'];
@@ -30,6 +32,7 @@ function writeLocalCharacters($connect, $location)
           }
         }
       }
+
       fwrite($fp, "</td></tr>");
     }
 

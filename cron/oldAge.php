@@ -35,7 +35,7 @@ else
       $birth = strtotime($char['birth_date']);
       $now = new DateTime('NOW');
       $now = $now->format('Y-m-d H:i:s');
-      $now = strtotime($now);
+      $now = strtotime($now) + (3600*6);
       $days = ($now-$birth)/(60*60*24);
 
       // calculate probability of death based on age

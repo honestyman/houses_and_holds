@@ -26,7 +26,6 @@ require_once "src/getLocationInfo.php";
 require_once "src/displayNavigation.php";
 require_once "src/charTravel.php";
 require_once "src/displayLocalObjects.php";
-require_once "src/displayLocalCharacters.php";
 require_once "src/readLocalCharacters.php";
 require_once "src/writeLocalCharacters.php";
 require_once "src/displayCharacterStatus.php";
