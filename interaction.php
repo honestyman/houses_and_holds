@@ -24,6 +24,8 @@ require_once "src/openInventory.php";
 require_once "src/harvest.php";
 require_once "src/eat.php";
 require_once "src/inspectFood.php";
+require_once "src/inspectFixture.php";
+require_once "src/inspectStorage.php";
 
 $connect = dbConnect();
 
@@ -92,6 +94,21 @@ else
     if($interaction=='inspect_food')
     {
       inspectFood($connect, $char_id, $user_email, $user_id, $obj_id);
+    }
+
+    if($interaction=='inspect_fixture')
+    {
+      inspectFixture($connect, $char_id, $user_email, $user_id, $obj_id);
+    }
+
+    if($interaction=='inspect_registrationledger')
+    {
+      inspectFixture($connect, $char_id, $user_email, $user_id, $obj_id);
+    }
+
+    if($interaction=='inspect_storage')
+    {
+      inspectStorage($connect, $char_id, $user_email, $user_id, $obj_id);
     }
   }
 
