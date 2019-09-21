@@ -54,7 +54,7 @@ function captureBanner($connect, $banner_id, $char_id)
           $now = new DateTime('NOW');
           $now = $now->format('Y-m-d H:i:s');
           $now = strtotime($now);
-          $last_aggression = strtotime($rowsc['last_aggression']);
+          $last_aggression = strtotime($rowc['last_aggression']);
           $aggression_interval = $now-$last_aggression;
         }
 
