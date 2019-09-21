@@ -161,7 +161,7 @@ else
       updateInventory($connect, $char);
       displayInventoryButton($connect, $user_email, $user_id, $char_id);
 
-      //$_POST['location_id'] = $char['location_id'];
+      $_POST['location_id'] = $char['location_id'];
 
       // Get info about the location
       $location = getLocationInfo($connect, $char['location_id']);

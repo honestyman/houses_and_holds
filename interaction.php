@@ -21,6 +21,7 @@ require_once "src/viewPledge.php";
 require_once "src/reviewPledges.php";
 require_once "src/openStorage.php";
 require_once "src/openInventory.php";
+require_once "src/harvest.php";
 
 $connect = dbConnect();
 
@@ -74,6 +75,11 @@ else
     if($interaction=='open_storage')
     {
       openStorage($connect, $char_id, $user_email, $user_id, $obj_id);
+    }
+
+    if($interaction=='harvest')
+    {
+      harvest($connect, $char_id, $user_email, $user_id, $obj_id);
     }
   }
 
