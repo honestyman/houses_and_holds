@@ -22,6 +22,7 @@ require_once "src/reviewPledges.php";
 require_once "src/openStorage.php";
 require_once "src/openInventory.php";
 require_once "src/harvest.php";
+require_once "src/eat.php";
 
 $connect = dbConnect();
 
@@ -80,6 +81,11 @@ else
     if($interaction=='harvest')
     {
       harvest($connect, $char_id, $user_email, $user_id, $obj_id);
+    }
+
+    if($interaction=='eat')
+    {
+      eat($connect, $char_id, $user_email, $user_id, $obj_id);
     }
   }
 

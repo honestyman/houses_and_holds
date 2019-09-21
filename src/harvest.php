@@ -123,7 +123,7 @@ function harvest($connect, $char_id, $user_email, $user_id, $food_source_id)
             // place construct in character inventory
             for($i = 0; $i < $food_source['construct_num']; $i++)
             {
-              $sqli = "INSERT INTO items(storage_id, name, quality, class_id, weight, created) VALUES (" . $inventory['id'] . ", '" . $food_source['construct_name'] . "', '" . $food_source['construct_quality'] . "', " . $food_source['construct_class'] . ", " . $food_source['construct_weight'] . ", CURRENT_TIMESTAMP)";
+              $sqli = "INSERT INTO items(storage_id, name, quality, class_id, weight, created, duration_s) VALUES (" . $inventory['id'] . ", '" . $food_source['construct_name'] . "', '" . $food_source['construct_quality'] . "', " . $food_source['construct_class'] . ", " . $food_source['construct_weight'] . ", CURRENT_TIMESTAMP, " . $food_source['construct_duration'] . ")";
               mysqli_query($connect, $sqli);
               $sqlu = "UPDATE fixtures SET last_used=CURRENT_TIMESTAMP WHERE id=" . $food_source['id'];
               mysqli_query($connect, $sqlu);
