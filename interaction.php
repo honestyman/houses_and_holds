@@ -23,6 +23,7 @@ require_once "src/openStorage.php";
 require_once "src/openInventory.php";
 require_once "src/harvest.php";
 require_once "src/eat.php";
+require_once "src/inspectFood.php";
 
 $connect = dbConnect();
 
@@ -86,6 +87,11 @@ else
     if($interaction=='eat')
     {
       eat($connect, $char_id, $user_email, $user_id, $obj_id);
+    }
+
+    if($interaction=='inspect_food')
+    {
+      inspectFood($connect, $char_id, $user_email, $user_id, $obj_id);
     }
   }
 
