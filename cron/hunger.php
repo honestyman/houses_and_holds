@@ -34,6 +34,10 @@ else
         // dies
         $sqlu = "UPDATE characters SET death_date=CURRENT_TIMESTAMP WHERE id=" . $char['id'];
         mysqli_query($connect, $sqlu);
+
+        // drop satchel
+        $sqlu = "UPDATE storage SET location_id=" . $char['location_id'] . " WHERE character_id=" . $char['id'];
+        mysqli_query($connect, $sqlu);
       }
       else
       {

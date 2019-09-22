@@ -18,7 +18,7 @@ function updateInventory($connect, $char)
   if($ress->num_rows == 0)
   {
     // Create storage unit
-    $sqli = "INSERT INTO storage(name, is_inventory, character_id, capacity) VALUES ('Satchel', 1, " . $char['id'] . ", " . $capacity . ")";
+    $sqli = "INSERT INTO storage(name, is_inventory, character_id, capacity, description) VALUES ('Satchel', 1, " . $char['id'] . ", " . $capacity . ", '<p>Someone dropped their satchel.</p>')";
     mysqli_query($connect, $sqli);
   }
   else if($ress->num_rows == 1)
