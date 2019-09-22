@@ -41,7 +41,11 @@ function writeLocalCharacters($connect, $location)
   }
   else
   {
+    fwrite($fp, "<table><tr><th>People</th></tr>");
+    fwrite($fp, "<tr><td>");
     fwrite($fp, "No one here.");
+    fwrite($fp, "</td></tr>");
+    fwrite($fp, "</table>");
   }
 
   fclose($fp);

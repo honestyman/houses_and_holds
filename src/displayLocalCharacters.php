@@ -15,6 +15,22 @@ function displayLocalCharacters($connect, $user_email, $user_id, $char, $locatio
         echo "<tr><td>";
         echo $row['name'];
 
+        if(!is_null($row['house_id']))
+        {
+          $sqlh = "SELECT * FROM houses WHERE id=" . $row['house_id'];
+          $resh = mysqli_query($connect, $sqlh);
+
+          if($resh->num_rows == 1)
+          {
+            $house = $resh->fetch_assoc();
+            echo " " . $house['name'];
+          }
+          else
+          {
+            echo "What the shit";
+          }
+        }
+
         // Add interaction option, if available
         $class_id = 8; // All characters have class id 8
         $sqli = "SELECT * FROM class_interactions WHERE class_id=" . $class_id;

@@ -31,6 +31,7 @@ require_once "src/writeLocalCharacters.php";
 require_once "src/displayCharacterStatus.php";
 require_once "src/updateInventory.php";
 require_once "src/displayInventoryButton.php";
+require_once "src/displayLocalCharacters.php";
 
 $connect = dbConnect();
 
@@ -81,8 +82,8 @@ if(isset($_POST['travel']))
   $new_loc_id = $_POST['new_loc_id'];
 
   charTravel($connect, $char_id, $new_loc_id);
-  writeLocalCharacters($connect, $old_loc_id);
-  writeLocalCharacters($connect, $new_loc_id);
+  //writeLocalCharacters($connect, $old_loc_id);
+  //writeLocalCharacters($connect, $new_loc_id);
 }
 
 // Check if quit form is submitted
@@ -95,8 +96,7 @@ if(isset($_POST['quit']))
   $_SESSION['user_id'] = $user_id;
 
   $char = charMakeOffline($connect, $char_id);
-  writeLocalCharacters($connect, $char['location_id']);
-  //writeLocalCharacters($connect, $last_location_id);
+  //writeLocalCharacters($connect, $char['location_id']);
 }
 
 if(isset($_POST['returntodash']))
@@ -177,7 +177,8 @@ else
 
       // Display characters in location
       echo "<div id='location_characters'>";
-      readLocalCharacters($connect, $location);
+      //readLocalCharacters($connect, $location);
+      displayLocalCharacters($connect, $user_email, $user_id, $char_id, $location);
       echo "</div>";
 
       // Display navigation menu
@@ -198,10 +199,10 @@ if(isset($_POST['logout']))
 
 </div>
 
-<script type="text/javascript">
+<!--script type="text/javascript">
 function loadPeople()
 {
-  var path = "gamelogs/charsLoc" + "<?php echo $_POST['location_id'] ?>" + ".html"
+  var path = "gamelogs/charsLoc" + "?php echo $_POST['location_id'] ?>" + ".html"
 	$.ajax
   ({
 		url: path,
@@ -214,7 +215,7 @@ function loadPeople()
 }
 
 setInterval (loadPeople, 2500);
-</script>
+</script-->
 
 </body>
 </html>
