@@ -27,6 +27,7 @@ require_once "src/inspectFood.php";
 require_once "src/inspectFixture.php";
 require_once "src/inspectStorage.php";
 require_once "src/createTransaction.php";
+require_once "src/viewYourTransactions.php";
 
 $connect = dbConnect();
 
@@ -115,6 +116,11 @@ else
     if($interaction=='create_transaction')
     {
       createTransaction($connect, $char_id, $user_email, $user_id);
+    }
+
+    if($interaction=='view_your_transactions')
+    {
+      viewYourTransactions($connect, $char_id, $user_email, $user_id);
     }
   }
 
