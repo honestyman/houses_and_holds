@@ -28,6 +28,7 @@ require_once "src/inspectFixture.php";
 require_once "src/inspectStorage.php";
 require_once "src/createTransaction.php";
 require_once "src/viewYourTransactions.php";
+require_once "src/viewOpenTransactions.php";
 
 $connect = dbConnect();
 
@@ -121,6 +122,11 @@ else
     if($interaction=='view_your_transactions')
     {
       viewYourTransactions($connect, $char_id, $user_email, $user_id);
+    }
+
+    if($interaction=='view_open_transactions')
+    {
+      viewOpenTransactions($connect, $char_id, $user_email, $user_id);
     }
   }
 
