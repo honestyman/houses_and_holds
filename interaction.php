@@ -26,6 +26,7 @@ require_once "src/eat.php";
 require_once "src/inspectFood.php";
 require_once "src/inspectFixture.php";
 require_once "src/inspectStorage.php";
+require_once "src/createTransaction.php";
 
 $connect = dbConnect();
 
@@ -110,6 +111,64 @@ else
     {
       inspectStorage($connect, $char_id, $user_email, $user_id, $obj_id);
     }
+
+    if($interaction=='create_transaction')
+    {
+      createTransaction($connect, $char_id, $user_email, $user_id);
+    }
+  }
+
+  if(isset($_POST['create_trade_items']))
+  {
+    $user_email = $_POST['user_email'];
+    $user_id = $_POST['user_id'];
+    $char_id = $_POST['char_id'];
+
+    //insertTransaction();
+    $items = [];
+
+    $sqls1 = "SELECT * FROM storage WHERE character_id=" . $char_id;
+    $ress1 = mysqli_query($connect, $sqls1);
+
+    if($ress1->num_rows == 1)
+    {
+      $satchel = $ress1->fetch_assoc();
+
+      $sqls2 = "SELECT * FROM items WHERE storage_id=" . $satchel['id'];
+      $ress2 = mysqli_query($connect, $sqls2);
+
+      if($ress2->num_rows > 0)
+      {
+        while($item = $ress2->fetch_assoc())
+        {
+          if(isset($_POST[$item['id']]))
+          {
+            array_push($items, $item['id']);
+            $sqlu = "UPDATE items SET storage_id=23 WHERE id=" . $item['id'];
+            mysqli_query($connect, $sqlu);
+          }
+        }
+      }
+
+      if(count($items) > 0)
+      {
+        $str = implode(",", $items);
+
+        $sqli = "INSERT INTO character_transactions(character_id, items) VALUES (" . $char_id . ", '" . $str . "')";
+        mysqli_query($connect, $sqli);
+
+        echo "<p>Transaction created.</p>";
+      }
+      else
+      {
+        echo "<p>You didn't select any items.</p>";
+      }
+    }
+    else
+    {
+      echo "<p>Uh oh.</p>";
+    }
+
   }
 
   if(isset($_POST['open_inventory']))
