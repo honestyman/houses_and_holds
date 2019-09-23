@@ -127,8 +127,8 @@ function harvest($connect, $char_id, $user_email, $user_id, $food_source_id)
               mysqli_query($connect, $sqli);
               $sqlu = "UPDATE fixtures SET last_used=CURRENT_TIMESTAMP WHERE id=" . $food_source['id'];
               mysqli_query($connect, $sqlu);
-              echo "<p>You've collected " . $food_source['construct_num'] . " " . $food_source['construct_name'] . "(s).</p>";
             }
+            echo "<p>You've collected " . $food_source['construct_num'] . " " . $food_source['construct_name'] . "(s).</p>";
           }
           else
           {
