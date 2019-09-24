@@ -29,6 +29,7 @@ require_once "src/inspectStorage.php";
 require_once "src/createTransaction.php";
 require_once "src/viewYourTransactions.php";
 require_once "src/viewOpenTransactions.php";
+require_once "src/inspectTransaction.php";
 
 $connect = dbConnect();
 
@@ -127,6 +128,11 @@ else
     if($interaction=='view_open_transactions')
     {
       viewOpenTransactions($connect, $char_id, $user_email, $user_id);
+    }
+
+    if($interaction=='inspect_transaction')
+    {
+      inspectTransaction($connect, $char_id, $user_email, $user_id, $obj_id);
     }
   }
 

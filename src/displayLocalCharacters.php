@@ -4,9 +4,13 @@ function displayLocalCharacters($connect, $user_email, $user_id, $char, $locatio
   $sql = "SELECT * FROM characters WHERE is_online=1 AND location_id=" . $location['id'];
   $result = mysqli_query($connect, $sql);
 
-  if($result->num_rows > 1)
+  echo "<table><tr><th>People</th></tr>";
+
+  if($result->num_rows == 1)
   {
-    echo "<table><tr><th>People</th></tr>";
+    echo "<tr><td>No one here but you.</td></tr>";
+  }
+  {
 
     while($row = $result->fetch_assoc())
     {
@@ -60,5 +64,6 @@ function displayLocalCharacters($connect, $user_email, $user_id, $char, $locatio
       }
     }
   }
+  echo "</table>";
 }
  ?>

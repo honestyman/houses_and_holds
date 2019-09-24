@@ -32,7 +32,7 @@ function viewOpenTransactions($connect, $char_id, $user_email, $user_id)
         }
 
         echo "</select>";
-        echo "<input type='hidden' name='obj_id' value='" . $row1['id'] . "' />";
+        echo "<input type='hidden' name='obj_id' value='" . $transo['id'] . "' />";
         echo "<input type='hidden' name='user_email' value='" . $user_email . "' />";
         echo "<input type='hidden' name='user_id' value='" . $user_id . "' />";
         echo "<input type='hidden' name='char_id' value='" . $char_id . "' />";
