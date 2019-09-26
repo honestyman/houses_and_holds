@@ -30,6 +30,7 @@ require_once "src/createTransaction.php";
 require_once "src/viewYourTransactions.php";
 require_once "src/viewOpenTransactions.php";
 require_once "src/inspectTransaction.php";
+require_once "src/makeOffer.php";
 
 $connect = dbConnect();
 
@@ -117,7 +118,7 @@ else
 
     if($interaction=='create_transaction')
     {
-      createTransaction($connect, $char_id, $user_email, $user_id);
+      createTransaction($connect, $char_id, $user_email, $user_id, 0);
     }
 
     if($interaction=='view_your_transactions')
@@ -134,6 +135,11 @@ else
     {
       inspectTransaction($connect, $char_id, $user_email, $user_id, $obj_id);
     }
+
+    if($interaction=='make_offer')
+    {
+      makeOffer($connect, $char_id, $user_email, $user_id, $obj_id);
+    }
   }
 
   if(isset($_POST['create_trade_items']))
@@ -142,7 +148,7 @@ else
     $user_id = $_POST['user_id'];
     $char_id = $_POST['char_id'];
 
-    //insertTransaction();
+    $offer_to = $_POST['offer_to'];
     $items = [];
 
     $sqls1 = "SELECT * FROM storage WHERE character_id=" . $char_id;
@@ -172,7 +178,7 @@ else
       {
         $str = implode(",", $items);
 
-        $sqli = "INSERT INTO character_transactions(character_id, items) VALUES (" . $char_id . ", '" . $str . "')";
+        $sqli = "INSERT INTO character_transactions(character_id, items, offer_to) VALUES (" . $char_id . ", '" . $str . "', " . $offer_to . ")";
         mysqli_query($connect, $sqli);
 
         echo "<p>Transaction created.</p>";

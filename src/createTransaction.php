@@ -1,5 +1,5 @@
 <?php
-function createTransaction($connect, $char_id, $user_email, $user_id)
+function createTransaction($connect, $char_id, $user_email, $user_id, $transaction_id)
 {
   // find all char items and display with checkboxes
   $sqls1 = "SELECT * FROM storage WHERE character_id=" . $char_id;
@@ -19,6 +19,7 @@ function createTransaction($connect, $char_id, $user_email, $user_id)
       echo "<input type='hidden' name='user_email' value='" . $user_email . "' />";
       echo "<input type='hidden' name='user_id' value='" . $user_id . "' />";
       echo "<input type='hidden' name='char_id' value='" . $char_id . "' />";
+      echo "<input type='hidden' name='offer_to' value='" . $transaction_id . "' />";
 
       while($item = $ress2->fetch_assoc())
       {
