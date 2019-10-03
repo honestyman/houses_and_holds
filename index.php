@@ -32,6 +32,7 @@ require_once "src/displayCharacterStatus.php";
 require_once "src/updateInventory.php";
 require_once "src/displayInventoryButton.php";
 require_once "src/displayLocalCharacters.php";
+require_once "src/updateCooldown.php";
 
 $connect = dbConnect();
 
@@ -67,7 +68,7 @@ if (isset($_POST['play']))
   $_SESSION['char_id'] = $char_id;
 
   $char = charMakeOnline($connect, $char_id);
-  writeLocalCharacters($connect, $char['location_id']);
+  //writeLocalCharacters($connect, $char['location_id']);
 }
 
 // Check if travel form is submitted
@@ -160,6 +161,9 @@ else
       // Create or update character inventory
       updateInventory($connect, $char);
       displayInventoryButton($connect, $user_email, $user_id, $char_id);
+
+      // update character cooldown
+      updateCooldown($connect, $char);
 
       $_POST['location_id'] = $char['location_id'];
 
