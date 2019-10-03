@@ -97,6 +97,7 @@ if(isset($_POST['quit']))
 
   $char = charMakeOffline($connect, $char_id);
   //writeLocalCharacters($connect, $char['location_id']);
+  unset($_SESSION['$char_id']);
 }
 
 if(isset($_POST['returntodash']))
@@ -178,7 +179,7 @@ else
       // Display characters in location
       echo "<div id='location_characters'>";
       //readLocalCharacters($connect, $location);
-      displayLocalCharacters($connect, $user_email, $user_id, $char_id, $location);
+      displayLocalCharacters($connect, $user_email, $user_id, $char, $location);
       echo "</div>";
 
       // Display navigation menu
@@ -190,7 +191,7 @@ else
 // Check if the logout form is submitted
 if(isset($_POST['logout']))
 {
-  //session_destroy();
+  session_destroy();
   //header("Location: index.php");
   exit;
 }
