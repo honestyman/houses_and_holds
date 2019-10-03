@@ -31,6 +31,7 @@ require_once "src/viewYourTransactions.php";
 require_once "src/viewOpenTransactions.php";
 require_once "src/inspectTransaction.php";
 require_once "src/makeOffer.php";
+require_once "src/attack.php";
 
 $connect = dbConnect();
 
@@ -139,6 +140,11 @@ else
     if($interaction=='make_offer')
     {
       makeOffer($connect, $char_id, $user_email, $user_id, $obj_id);
+    }
+
+    if($interaction=='attack')
+    {
+      attack($connect, $char_id, $user_email, $user_id, $obj_id);
     }
   }
 
