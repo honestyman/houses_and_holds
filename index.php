@@ -7,8 +7,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-<div id='wrap'>
-  <h1>Houses and Holds</h1>
+<div class='container' id='wrap'>
+  <div id='title'>
+    <h1>Houses and Holds</h1>
+  </div>
 
 <?php
 
